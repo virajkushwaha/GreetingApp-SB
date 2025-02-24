@@ -62,4 +62,20 @@ public class GreetingController {
         return response;
     }
 
+
+
+    // GET Request - Personalized Greeting
+    @GetMapping("/personalized")
+    public String getPersonalizedGreeting(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+
+        logger.info("Received GET request for personalized greeting with firstName: {} and lastName: {}", firstName, lastName);
+
+        String message = greetingService.getPersonalizedGreeting(firstName, lastName);
+        logger.debug("Generated Greeting: {}", message);
+
+        return "{\"message\": \"" + message + "\"}";
+    }
+    
 }
