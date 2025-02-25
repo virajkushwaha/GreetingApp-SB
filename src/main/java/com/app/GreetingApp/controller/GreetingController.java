@@ -1,5 +1,6 @@
 package com.app.GreetingApp.controller;
 
+import com.app.GreetingApp.model.Greeting;
 import com.app.GreetingApp.services.GreetingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,5 +78,11 @@ public class GreetingController {
 
         return "{\"message\": \"" + message + "\"}";
     }
-    
+
+    // POST Request - Save Greeting Message
+    @PostMapping("/save")
+    public Greeting saveGreeting(@RequestBody String message) {
+        logger.info("Received POST request to save greeting: {}", message);
+        return greetingService.saveGreeting(message);
+    }
 }

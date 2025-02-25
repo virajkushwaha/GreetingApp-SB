@@ -1,5 +1,7 @@
 package com.app.GreetingApp.services;
 
+import com.app.GreetingApp.model.Greeting;
+import com.app.GreetingApp.repository.GreetingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,10 @@ import org.springframework.stereotype.Service;
 public class GreetingService {
 
     private static final Logger logger = LoggerFactory.getLogger(GreetingService.class);
+
+    public GreetingService(GreetingRepository greetingRepository) {
+        this.greetingRepository = greetingRepository;
+    }
 
     public String getGreeting() {
         logger.info("Generating greeting message from GreetingService");
@@ -26,5 +32,14 @@ public class GreetingService {
         } else {
             return "Hello World";
         }
+    }
+
+
+    private final GreetingRepository greetingRepository;
+
+    public Greeting saveGreeting(String message) {
+        logger.info("Saving greeting message: {}", message);
+        Greeting greeting = new Greeting(message);
+        return greetingRepository.save(greeting);
     }
 }
