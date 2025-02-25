@@ -1,10 +1,13 @@
 package com.app.GreetingApp.controller;
 
+import com.app.GreetingApp.dto.GreetingDTO;
 import com.app.GreetingApp.model.Greeting;
 import com.app.GreetingApp.services.GreetingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/greeting")
@@ -81,8 +84,37 @@ public class GreetingController {
 
     // POST Request - Save Greeting Message
     @PostMapping("/save")
-    public Greeting saveGreeting(@RequestBody String message) {
-        logger.info("Received POST request to save greeting: {}", message);
-        return greetingService.saveGreeting(message);
+    public GreetingDTO saveGreeting(@RequestBody Greeting greeting) {
+        logger.info("Saving the request for Greeting : {}", greeting);
+        return greetingService.saveGreeting(greeting);
+    }
+
+    // GET Request - Find Greeting by ID
+    @GetMapping("/messages/{id}")
+    public GreetingDTO getGreetingById(@PathVariable Long id) {
+        logger.info("Received GET request for Greeting with ID: {}", id);
+        return greetingService.findGreetingById(id);
+    }
+    @GetMapping("/messages/all")
+    // GET Request - Fetching all Messages
+    public List<Greeting> getAll() {
+        logger.info("Received GET request for listing all greetings");
+        return greetingService.getAll();
+    }
+
+    // PUT Request - Update a Greeting Message
+    @PutMapping("/update/{id}")
+    public Greeting updateGreeting(@PathVariable Long id, @RequestBody String newMessage) {
+        logger.info("Received PUT request to update Greeting ID: {}", id);
+        return greetingService.updateGreeting(id, newMessage);
+    }
+
+
+    // DELETE Request - Delete a Greeting Message
+    @DeleteMapping("/delete/{id}")
+    public String deleteGreeting(@PathVariable Long id) {
+        logger.info("Received DELETE request for Greeting ID: {}", id);
+        greetingService.deleteGreeting(id);
+        return "Greeting with ID " + id + " has been deleted successfully.";
     }
 }

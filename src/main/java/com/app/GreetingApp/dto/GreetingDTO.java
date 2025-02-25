@@ -1,21 +1,21 @@
-package com.app.GreetingApp.model;
+package com.app.GreetingApp.dto;
 
-import jakarta.persistence.*;
+import com.app.GreetingApp.model.Greeting;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Greeting {
-    @Getter
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+public class GreetingDTO {
     private Long id;
     private String message;
+
+    public GreetingDTO(Long id, String message) {
+        this.id = id;
+        this.message = message;
+    }
 
     public Long getId() {
         return id;
@@ -32,5 +32,4 @@ public class Greeting {
     public void setMessage(String message) {
         this.message = message;
     }
-
 }
